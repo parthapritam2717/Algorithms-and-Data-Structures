@@ -48,12 +48,13 @@ typedef multimap<long long,long long> mmap;
 #define pb push_back
 #define mp make_pair
 #define PI 3.14159265
+#define INF 8944674407370955161LL
 #define mem(x,i) memset(x,i,sizeof(x))
 #define fori(i,s,n) for(int i=(s);i<(n);++i)
 #define forl(i,s,n) for(ll i=(s);i<(n);++i)
 #define forir(i,s,n) for(int i=(n)-1;i>=(s);--i)
 #define forlr(i,s,n) for(ll i=(n)-1;i>=(s);--i)
-#define INF 8944674407370955161LL
+
 #define debug(i,st,arr) fori(i,0,st){cout<<arr[i]<<" ";}cout<<endl;
 #define debugl(i,st,arr) forl(i,0,st){cout<<arr[i]<<" ";}cout<<endl;
 #define forci(i,sw) for((i)=(sw).begin();(i)!=(sw).end();++(i))
