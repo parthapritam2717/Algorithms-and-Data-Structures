@@ -1,2 +1,2 @@
-ABCDFE
-DFEABC
+abcdbc
+dabc

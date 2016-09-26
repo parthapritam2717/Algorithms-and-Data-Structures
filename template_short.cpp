@@ -33,6 +33,7 @@ typedef multimap<long long,long long> mmap;
 #define INF 8944674407370955161LL
 int main()
 {
+    //std::ios::sync_with_stdio(false);
     int t;
     scanf("%d",&t);
     while(t--){
