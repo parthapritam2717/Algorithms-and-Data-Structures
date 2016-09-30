@@ -1,3 +1,5 @@
+/*coin change problem using memoization and simple to understand*/
+http://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
@@ -54,18 +56,39 @@ inline void fastRead_int(int &x) {
     if(neg)
     	x = -x;
 }
+int dp[3][4];
+int sum(vi &arr,int n,int k){
+    if(n<0 && k>0){
+        return 0;
+    }
+    if(k==0){
+        return 1;
+    }
+    if(k<0){
+        return 0;
+    }
+    if(dp[n][k]!=-1){
+        cout<<"am here"<<endl;
+        return dp[n][k];
+    }
+    dp[n][k]=sum(arr,n-1,k)+sum(arr,n,k-arr[n]);
+    return dp[n][k];
+}
+
+
 int main()
 {
-    //std::ios::sync_with_stdio(false);
-    int t;
-    scanf("%d",&t);
-    while(t--){
-
-
-
-
-
+    memset(dp,-1,sizeof(dp));
+    vi arr(3,0);
+    arr[0]=1;arr[1]=2;arr[2]=3;
+    dp[2][3]=sum(arr,1,4)+sum(arr,2,4-arr[2]);
+    for(int i=0;i<3;++i){
+        for(int j=0;j<4;++j){
+            cout<<dp[i][j]<<" ";
+        }
+        cout<<endl;
     }
     return 0;
 }
+
 

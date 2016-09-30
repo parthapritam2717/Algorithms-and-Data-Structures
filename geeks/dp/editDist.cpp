@@ -54,18 +54,35 @@ inline void fastRead_int(int &x) {
     if(neg)
     	x = -x;
 }
+int dp[100][100];//nXm for storing the dp table
+int calc(int n,int m,string &s1,string &s2){
+    if(n==0){
+        return m;
+    }
+    if(m==0){
+        return n;
+    }
+    if(dp[n-1][m-1]!=-1){
+        cout<<"Am here"<<endl;
+        return dp[n-1][m-1];
+    }
+    if(s1[n-1]==s2[m-1]){
+        dp[n-1][m-1]=calc(n-1,m-1,s1,s2);
+    }
+    else{
+        dp[n-1][m-1]=1+min(calc(n-1,m-1,s1,s2),min(calc(n-1,m,s1,s2),calc(n,m-1,s1,s2)));
+    }
+    return dp[n-1][m-1];
+}
 int main()
 {
-    //std::ios::sync_with_stdio(false);
-    int t;
-    scanf("%d",&t);
-    while(t--){
-
-
-
-
-
-    }
+    memset(dp,-1,sizeof(dp));
+    string s1="sun";
+    string s2="s";
+    int n=s1.size();
+    int m=s2.size();
+    cout<<calc(n,m,s1,s2)<<endl;
     return 0;
 }
+
 

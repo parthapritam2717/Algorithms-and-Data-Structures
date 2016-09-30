@@ -54,18 +54,34 @@ inline void fastRead_int(int &x) {
     if(neg)
     	x = -x;
 }
+int dp[50][3];
+
+int W=40;
+int knapsack(int n,int w,vi &wt){
+    if(n<0){
+        return w;
+    }
+    if(dp[w][n]!=-1){
+        cout<<"here"<<endl;
+        return dp[w][n];
+    }
+    if(wt[n]>w){
+        dp[w][n]=knapsack(n-1,w,wt);
+    }
+    else{
+        dp[w][n]=max(wt[n]+knapsack(n-1,w-wt[n],wt),knapsack(n-1,w,wt));
+    }
+    return dp[w][n];
+}
 int main()
 {
     //std::ios::sync_with_stdio(false);
-    int t;
-    scanf("%d",&t);
-    while(t--){
-
-
-
-
-
-    }
+    vi wt(3);
+    wt[0]=10;wt[1]=20;wt[2]=30;
+    memset(dp,-1,sizeof(dp));
+    dp[W-1][2]=max(wt[2]+knapsack(1,W-wt[2],wt),knapsack(1,W,wt));
+    cout<<dp[W-1][2]<<endl;
     return 0;
 }
+
 

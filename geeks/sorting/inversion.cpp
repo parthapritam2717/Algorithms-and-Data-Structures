@@ -35,37 +35,60 @@ typedef multimap<long long,long long> mmap;
 #define mp make_pair
 #define PI 3.14159265
 #define INF 8944674407370955161LL
-inline void fastRead_int(int &x) {
-    register int c = getchar_unlocked();
-    x = 0;
-    int neg = 0;
+int _merge(vi &arr,int left,int mid,int right){
+    int i=left;
+    int j=mid+1;
+    vi temp(right-left+1);
+    int k=0;
+    int inv=0;
+    while(i<=mid && j<=right){
+        if(arr[i]<=arr[j]){
+            temp[k++]=arr[i++];
+        }
+        else{
+            temp[k++]=arr[j++];
+            // here we will get the inversion
+            inv+=(mid-i+1);
+        }
 
-    for(; ((c<48 || c>57) && c != '-'); c = getchar_unlocked());
-
-    if(c=='-') {
-    	neg = 1;
-    	c = getchar_unlocked();
     }
-
-    for(; c>47 && c<58 ; c = getchar_unlocked()) {
-    	x = (x<<1) + (x<<3) + c - 48;
+    while(i<=mid){
+        temp[k++]=arr[i++];
     }
+    while(j<=right){
+        temp[k++]=arr[j++];
+    }
+    // now copy the temp array back to arr
+    i=left;j=0;
+    while(i<=right){
+        arr[i++]=temp[j++];
+    }
+    return inv;
 
-    if(neg)
-    	x = -x;
+}
+int mergeSort(vi &arr,int left,int right){
+    int inv=0;
+    if(left<right){
+        int mid=(left+right)/2;
+        inv=mergeSort(arr,left,mid);
+        inv+=mergeSort(arr,mid+1,right);
+        inv+=_merge(arr,left,mid,right);
+    }
+    return inv;
 }
 int main()
 {
     //std::ios::sync_with_stdio(false);
     int t;
     scanf("%d",&t);
-    while(t--){
-
-
-
-
-
+    vi arr(t,0);
+    fori(i,0,t){
+        cin>>arr[i];
     }
+    //now we will perform merge sort in this vector and count inversion in the array
+    cout<<mergeSort(arr,0,t-1)<<endl;
     return 0;
 }
+
+
 
