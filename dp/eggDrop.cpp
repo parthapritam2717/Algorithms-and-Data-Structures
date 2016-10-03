@@ -1,3 +1,4 @@
+/*http://www.practice.geeksforgeeks.org/problem-page.php?pid=162*/
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
@@ -35,69 +36,53 @@ typedef multimap<long long,long long> mmap;
 #define mp make_pair
 #define PI 3.14159265
 #define INF 8944674407370955161LL
-
 inline void fastRead_int(int &x) {
     register int c = getchar_unlocked();
     x = 0;
     int neg = 0;
-
     for(; ((c<48 || c>57) && c != '-'); c = getchar_unlocked());
-
     if(c=='-') {
     	neg = 1;
     	c = getchar_unlocked();
     }
-
     for(; c>47 && c<58 ; c = getchar_unlocked()) {
     	x = (x<<1) + (x<<3) + c - 48;
     }
-
     if(neg)
     	x = -x;
 }
-int dp[300][300];
-int getCost(vvi &arr,int i,int j,int n,int m){
-    if(i==n-1 && j==m-1){
-        if(arr[i][j]>0){
-            return 1;
-        }
-        else{
-            return abs(arr[i][j])+1;
-        }
+int dp[300][300];// this table will contain the data for the n and x
+int getTrial(int n,int k){
+    //cout<<n<<" "<<k<<endl;
+    if(k==0 || k==1){
+        return k;
     }
-    if(i==n || j==m){
-        return 1000000000;
+    if(n==1){
+        return k;
     }
-    if(dp[i][j]!=-1){
-        return dp[i][j];
+    if(dp[n][k]!=-1){
+        return dp[n][k];
     }
-    int down=getCost(arr,i+1,j,n,m);
-    int right=getCost(arr,i,j+1,n,m);
-    int req=min(down,right);
-    dp[i][j]=max(req-arr[i][j],1);
-    return dp[i][j];
-
+    int mini=INT_MAX;
+    for(int x=1;x<=k;++x){
+        int res=max(getTrial(n-1,x-1),getTrial(n,k-x));// since we want to minimise the number of trials in the worst case we need the max of the two and then we add 1 to count the trial
+        mini=min(res,mini);
+    }
+    //cout<<mini<<endl;
+    dp[n][k]=mini+1;
+    return dp[n][k];
 }
-
-
-
-
 int main()
 {
-    //std::ios::sync_with_stdio(false);
+    std::ios::sync_with_stdio(false);
     int t;
-    scanf("%d",&t);
+    cin>>t;
     while(t--){
-        memset(dp,-1,sizeof(dp));
-    int n,m;
-    cin>>n>>m;
-    vvi arr(n,vi (m,0));
-    fori(i,0,n){
-        fori(j,0,m){
-            cin>>arr[i][j];
-        }
-    }
-    cout<<getCost(arr,0,0,n,m)<<endl;
+            memset(dp,-1,sizeof(dp));
+            int n,k;
+            cin>>n>>k;
+            cout<<getTrial(n,k)<<endl;
     }
     return 0;
 }
+
