@@ -1,3 +1,5 @@
+/*Given an array of jobs where every job has a deadline and associated profit if the job is finished before the deadline. It is also given that every job takes single unit of time, so the minimum possible deadline for any job is 1. How to maximize total profit if only one job can be scheduled at a time.*/
+
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
@@ -54,20 +56,49 @@ inline void fastRead_int(int &x) {
     if(neg)
     	x = -x;
 }
-//ifstream fin("input.txt"); fin>>n;
-//ofstream fout("output.txt"); fout<<n;
+bool cmp(pair<int,pair<int,int> > a,pair<int,pair<int,int> > b){
+    return (a.S.S>b.S.S);
+}
+void getSchedule(vector<pair<int,pair<int,int> > > &jobs,vector<int> &sol){
+    // here first we will have to sort the list by decreasing order of profit
+    sort(jobs.begin(),jobs.end(),cmp);
+    // now we will do the processing
+    int current=2;
+    int total_prof=jobs[0].S.S;
+    sol.pb(jobs[0].F);
+    for(int j=1;j<jobs.size();++j){
+        if(current<=jobs[j].S.F){
+            current++;
+            total_prof+=jobs[j].S.S;
+            sol.pb(jobs[j].F);
+        }
+    }
+    cout<<total_prof<<endl;
+}
+
 int main()
 {
     //std::ios::sync_with_stdio(false);
     int t;
     scanf("%d",&t);
     while(t--){
-
-
-
-
-
+        int n;
+        cin>>n;// n jobs
+        vector<pair<int,pair<int,int> > > jobs(n);// job id,deadline,profit
+        fori(i,0,n){
+            int deadline;
+            int profit;
+            cin>>deadline>>profit;
+            jobs[i]=mp(i,mp(deadline,profit));
+        }
+        vector<int> sol;
+        getSchedule(jobs,sol);
+        fori(i,0,sol.size()){
+            cout<<sol[i]<<" ";
+        }
+        cout<<endl;
     }
     return 0;
 }
+
 
